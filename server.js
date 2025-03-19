@@ -41,7 +41,7 @@ app.get('/api/bug/:bugId', (req, res) => {
 
 app.get('/api/bug/:bugId/remove', (req, res) => {
     const { bugId } = req.params
-    bugService.emove(bugId)
+    bugService.remove(bugId)
         .then(() => res.send('Bug removed'))
         .catch(err => {
             loggerService.error('Cannot remove bug', err)
