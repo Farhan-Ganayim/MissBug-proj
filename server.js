@@ -4,9 +4,13 @@ import { loggerService } from './services/logger.service.js'
 
 const app = express()
 
+app.use(express.static('public'))
+
+
 app.get('/api/bug', (req, res) => {
     bugService.query()
-        .then(bugs => res.send(JSON.stringify(bugs, null, 4)))
+        // .then(bugs => res.send(JSON.stringify(bugs, null, 4)))
+        .then(bugs => res.send(bugs))
         .catch(err => {
             loggerService.error('Cannot get bugs', err)
             res.status(500).send('Cannot load bugs')
@@ -18,7 +22,7 @@ app.get('/api/bug/save', (req, res) => {
         _id: req.query._id,
         title: req.query.title,
         description: req.query.severity,
-        severity: +req.query.severity,
+        severity: +req.query.description,
         createdAt: +req.query.createdAt
     }
     bugService.save(bugToSave)
