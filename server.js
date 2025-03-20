@@ -1,10 +1,14 @@
 import express from 'express'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
+import cookieParser from 'cookie-parser'
+
 
 const app = express()
 
 app.use(express.static('public'))
+app.use(cookieParser())
+
 
 
 app.get('/api/bug', (req, res) => {
@@ -35,6 +39,18 @@ app.get('/api/bug/save', (req, res) => {
 
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
+    let visitedBugs = req.cookies.visitedBugs || []
+
+    if (!visitedBugs.includes(bugId)) visitedBugs.push(bugId)
+
+    console.log("🚀 ~ app.get ~ visitedBugs:", visitedBugs)
+    if (visitedBugs.length > 3) {
+        console.log('You have reached your limit in free trial')
+        return res.status(401).send('You have reached your limit in free trial')
+    }
+
+    res.cookie('visitedBugs', visitedBugs, { maxAge: 9 * 1000 })
+
     bugService.getById(bugId)
         .then(bug => res.send(bug))
         .catch(err => {
