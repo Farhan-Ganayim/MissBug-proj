@@ -17,12 +17,13 @@ function query() {
 function getById(bugId) {
     const bug = bugs.find(bug => bug._id === bugId)
     if (!bug) return Promise.reject('Cannot find bug: ' + bugId)
-        return Promise.resolve(bug)
+    return Promise.resolve(bug)
 }
 
 function remove(bugId) {
     const bugIdx = bugs.findIndex(bug => bug._id === bugId)
     if (bugIdx === -1) return Promise.reject('Cannot remove bug: ' + bugId)
+
     bugs.splice(bugIdx, 1)
     return _saveBugsToFile()
 }

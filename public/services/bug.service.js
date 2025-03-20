@@ -33,6 +33,9 @@ function getById(bugId) {
 function remove(bugId) {
     return axios.get(`/api/bug/${bugId}/remove`)
         .then(res => res.data)
+        .catch(err => {
+            console.error('Error deleting bug', err)
+        })
 }
 
 function save(bug) {
