@@ -26,7 +26,7 @@ function query(filterBy) {
 }
 
 function getById(bugId) {
-    return axios.get(`/api/bug/${bugId}`)
+    return axios.get(BASE_URL + bugId)
         .then(res => res.data)
 }
 
@@ -36,6 +36,7 @@ function remove(bugId) {
 }
 
 function save(bug) {
+    // console.log('Saving bug:', bug)
     const url = BASE_URL + 'save'
     let queryParams = `?title=${bug.title}&description=${bug.description}&severity=${bug.severity}`
     if (bug._id) queryParams += `&_id=${bug._id}`
