@@ -9,7 +9,8 @@ app.use(express.static('public'))
 app.use(cookieParser())
 
 app.get('/api/bug', (req, res) => {
-    bugService.query()
+    const filterBy = req.query
+    bugService.query(filterBy)
         .then(bugs => res.send(bugs))
         .catch(err => {
             loggerService.error('Cannot get bugs', err)
@@ -64,7 +65,7 @@ app.get('/api/bug/:bugId/remove', (req, res) => {
         })
 })
 
-app.get('/', (req, res) => res.send('Hello there'))
+// app.get('/', (req, res) => res.send('Hello there'))
 
 const PORT = 3030
 
