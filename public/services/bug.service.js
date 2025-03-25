@@ -10,21 +10,6 @@ export const bugService = {
     getDefaultFilter
 }
 
-// function query(filterBy) {
-//     return axios.get(BASE_URL)
-//         .then(res => {
-//             let bugs = res.data
-//             if (filterBy.txt) {
-//                 const regExp = new RegExp(filterBy.txt, 'i')
-//                 bugs = bugs.filter(bug => regExp.test(bug.title))
-//             }
-//             if (filterBy.minSeverity) {
-//                 bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
-//             }
-//             return bugs
-//         })
-// }
-
 function query(filterBy) {
     return axios.get(BASE_URL, { params: filterBy })
         .then(res => res.data)
@@ -36,23 +21,29 @@ function getById(bugId) {
 }
 
 function remove(bugId) {
-    return axios.get(`/api/bug/${bugId}/remove`)
+    return axios.delete(BASE_URL + bugId)
         .then(res => res.data)
         .catch(err => {
             console.error('Error deleting bug', err)
+            throw err
         })
 }
 
 function save(bug) {
-    const url = BASE_URL + 'save'
-    let queryParams = `?title=${bug.title}&description=${bug.description}&severity=${bug.severity}`
-    if (bug._id) queryParams += `&_id=${bug._id}`
 
-    return axios.get(url + queryParams)
-        .then(res => res.data)
-        .catch(err => {
-            console.error('Error saving bug:', err)
-        })
+    if (bug._id) {
+        return axios.put(BASE_URL + bug._Id, bug)
+            .then(res => res.data)
+            .catch(err => {
+                console.error('Error editing bug', err)
+            })
+    } else {
+        return axios.post(BASE_URL, bug)
+            .then(res => res.data)
+            .catch(err => {
+                console.error('Error adding bug', err)
+            })
+    }
 }
 
 function getDefaultFilter() {

@@ -37,12 +37,13 @@ app.post('/api/bug', (req, res) => {
 
 //EDIT
 app.put('/api/bug/:bugId', (req, res) => {
+    console.log("🚀 ~ app.put ~ req:", req.body)
     const bugToSave = {
         _id: req.body._id,
         title: req.body.title,
         description: req.body.description,
         severity: +req.body.severity,
-    } 
+    }
     bugService.save(bugToSave)
         .then(bug => res.send(bug))
         .catch(err => {
@@ -52,13 +53,12 @@ app.put('/api/bug/:bugId', (req, res) => {
 })
 
 app.get('/api/bug/:bugId', (req, res) => {
+    
     const { bugId } = req.params
     let visitedBugs = req.cookies.visitedBugs || []
 
     if (!visitedBugs.includes(bugId)) visitedBugs.push(bugId)
-
     console.log("visitedBugs:", visitedBugs)
-
     if (visitedBugs.length > 3) {
         console.log('You have reached your limit in free trial')
         return res.status(401).send('You have reached your limit in free trial')
@@ -73,7 +73,9 @@ app.get('/api/bug/:bugId', (req, res) => {
 })
 
 app.delete('/api/bug/:bugId', (req, res) => {
+
     const { bugId } = req.params
+    console.log('Deleted: ', bugId)
     bugService.remove(bugId)
         .then(() => res.send('Bug removed'))
         .catch(err => {
