@@ -11,15 +11,18 @@ export const bugService = {
 }
 
 function query(filterBy) {
-    let filteredBugs = bugs.slice()
-    if (filterBy.txt) {
-        const regExp = new RegExp(filterBy.txt, 'i')
-        filteredBugs = filteredBugs.filter(bug => regExp.test(bug.title))
-    }
-    if (filterBy.minSeverity) {
-        filteredBugs = filteredBugs.filter(bug => bug.severity >= +filterBy.minSeverity)
-    }
-    return Promise.resolve(filteredBugs)
+    return Promise.resolve(bugs)
+        .then(bugs => {
+
+            if (filterBy.txt) {
+                const regExp = new RegExp(filterBy.txt, 'i')
+                bugs = bugs.filter(bug => regExp.test(bug.title))
+            }
+            if (filterBy.minSeverity) {
+                bugs = bugs.filter(bug => bug.severity >= +filterBy.minSeverity)
+            }
+            return bugs
+        })
 }
 
 function getById(bugId) {
