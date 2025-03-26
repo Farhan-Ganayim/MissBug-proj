@@ -10,6 +10,8 @@ export const bugService = {
     save
 }
 
+const PAGE_SIZE = 3
+
 function query(filterBy) {
     return Promise.resolve(bugs)
         .then(bugs => {
@@ -21,6 +23,11 @@ function query(filterBy) {
             if (filterBy.minSeverity) {
                 bugs = bugs.filter(bug => bug.severity >= +filterBy.minSeverity)
             }
+            if (filterBy.pageIdx !== undefined) {
+                const startIdx = filterBy.pageIdx * PAGE_SIZE
+                bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
+            }
+
             return bugs
         })
 }
@@ -39,7 +46,7 @@ function remove(bugId) {
     return _saveBugsToFile()
 }
 
-function save(bugToSave) { 
+function save(bugToSave) {
     if (bugToSave._id) {
         const bugIdx = bugs.findIndex(bug => bug._id === bugToSave._id)
         // bugs[bugIdx] = bugToSave

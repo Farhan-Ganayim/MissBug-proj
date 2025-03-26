@@ -6,3 +6,7 @@
     padding-block: 1em;
     border-block-end: 1px solid lightgray;
 }
+
+.bug-index-paging{
+    justify-self: center;
+}
