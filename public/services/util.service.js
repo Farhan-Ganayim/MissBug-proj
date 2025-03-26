@@ -2,6 +2,8 @@ export const utilService = {
     makeId,
     makeLorem,
     getRandomIntInclusive,
+    debounce,
+    animateCSS,
     loadFromStorage,
     saveToStorage
 }
@@ -42,4 +44,41 @@ function loadFromStorage(keyDB) {
 function saveToStorage(keyDB, val) {
     const valStr = JSON.stringify(val)
     localStorage.setItem(keyDB, valStr)
+}
+
+function debounce(func, delay) {
+    let timeoutId
+    return (...args) => {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }
+}
+
+function throttle(fn, wait) {
+    let timerId
+    return function (...args) {
+        if (timerId) return
+        timerId = setTimeout(() => {
+            fn.apply(this, args)
+            timerId = undefined
+        }, wait)
+    }
+}
+
+function animateCSS(el, animation = 'bounce', isRemoveClass = true) {
+    const prefix = 'animate__'
+    return new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`
+        el.classList.add(`${prefix}animated`, animationName)
+
+        function handleAnimationEnd(event) {
+            event.stopPropagation()
+            if (isRemoveClass) el.classList.remove(`${prefix}animated`, animationName)
+            resolve('Animation ended')
+        }
+
+        el.addEventListener('animationend', handleAnimationEnd, { once: true })
+    })
 }

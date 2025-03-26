@@ -1,17 +1,10 @@
 [
     {
-        "title": "Bug 1742916540965",
-        "description": "asass",
+        "title": "Bug 1742981305284",
+        "description": "sdfds aaaaaa",
         "severity": 2,
-        "_id": "AP9KF",
-        "createdAt": 1742916546562
-    },
-    {
-        "_id": "fdE6Y",
-        "title": "null",
-        "description": "null",
-        "severity": 2,
-        "createdAt": 1742896279917
+        "_id": "U3hxz",
+        "createdAt": 1742981313080
     },
     {
         "_id": "abc123",
@@ -24,7 +17,7 @@
         "_id": "abc124",
         "title": "Infinite Loop Detected",
         "description": "Veniam esse facilis vitae numquam architecto mollitia fugiat culpa minima aperia",
-        "severity": 3,
+        "severity": 5,
         "createdAt": 1543107359454
     },
     {
