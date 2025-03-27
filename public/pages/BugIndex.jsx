@@ -61,7 +61,7 @@ export function BugIndex() {
     }
 
     function onSetFilterBy(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy, pageIdx: 0 }))
     }
 
     function togglePaging(ev) {
@@ -100,6 +100,7 @@ export function BugIndex() {
 
             </input>
             <button onClick={() => onChangePage(-1)}>←</button>
+            {filterBy.pageIdx + 1 || '---'}
             <button onClick={() => onChangePage(1)}>→</button>
 
         </section>
