@@ -8,6 +8,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
 
     useEffect(() => {
         onSetFilterDebounce.current(filterByToEdit)
+        console.log('Current filterBy 👌:', filterByToEdit)
     }, [filterByToEdit])
 
     function handleChange({ target }) {

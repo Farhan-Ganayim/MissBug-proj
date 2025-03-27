@@ -34,15 +34,12 @@ function query(filterBy) {
                     }
                 })
             }
-
-            if (filterBy.pageIdx !== undefined)
-            // if (typeof filterBy.pageIdx === 'number')
-            {
+            if (filterBy.pageIdx !== undefined) {
                 const startIdx = filterBy.pageIdx * PAGE_SIZE
                 bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
             }
-
             return bugs
+
         })
 }
 
@@ -63,7 +60,6 @@ function remove(bugId) {
 function save(bugToSave) {
     if (bugToSave._id) {
         const bugIdx = bugs.findIndex(bug => bug._id === bugToSave._id)
-        // bugs[bugIdx] = bugToSave
         bugs[bugIdx] = { ...bugs[bugIdx], ...bugToSave }
     } else {
         bugToSave._id = utilService.makeId()
