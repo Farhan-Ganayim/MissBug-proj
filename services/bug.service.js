@@ -23,7 +23,21 @@ function query(filterBy) {
             if (filterBy.minSeverity) {
                 bugs = bugs.filter(bug => bug.severity >= +filterBy.minSeverity)
             }
-            if (filterBy.pageIdx !== undefined) {
+            if (filterBy.sortBy) {
+                const dir = +filterBy.sortDir || 1
+
+                bugs.sort((a, b) => {
+                    if (filterBy.sortBy === 'title') {
+                        return a.title.localeCompare(b.title) * dir
+                    } else {
+                        return (a[filterBy.sortBy] - b[filterBy.sortBy]) * dir
+                    }
+                })
+            }
+
+            if (filterBy.pageIdx !== undefined)
+            // if (typeof filterBy.pageIdx === 'number')
+            {
                 const startIdx = filterBy.pageIdx * PAGE_SIZE
                 bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
             }
