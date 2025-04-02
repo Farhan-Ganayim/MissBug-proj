@@ -98,7 +98,7 @@ export function BugIndex() {
                 <h3>Bug List</h3>
                 <button onClick={onAddBug}>Add Bug</button>
             </header>
-            <section className="bug-index-paging flex">
+            <section className="bug-index-paging">
                 <label htmlFor="paging-toggle">Use pages</label>
                 <input
                     type='checkbox'

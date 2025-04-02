@@ -7,6 +7,9 @@
     border-block-end: 1px solid lightgray;
 }
 
-.bug-index-paging{
+.bug-index-paging {
+    display: flex;
     justify-self: center;
+    align-items: center;
+    gap: 2em;
 }

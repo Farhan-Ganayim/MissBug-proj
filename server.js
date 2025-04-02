@@ -1,6 +1,8 @@
 import express from 'express'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
+import { authService } from './services/auth.servic.js'
+import { userService } from './services/user.service.js'
 import cookieParser from 'cookie-parser'
 
 const app = express()
@@ -84,8 +86,40 @@ app.delete('/api/bug/:bugId', (req, res) => {
         })
 })
 
+// Auth API
+app.post('/api/auth/login', (req, res) => {
+    const credentials = req.body
+
+    authService.checkLogin(credentials)
+        .then(user => {
+            const loginToken = authService.getLoginToken(user)
+            res.cookie('loginToken', loginToken)
+            res.send(user)
+        })
+        .catch(() => res.status(404).send('Invalid Credentials'))
+})
+
+app.post('/api/auth/signup', (req, res) => {
+    const credentials = req.body
+    
+    userService.add(credentials)
+        .then(user => {
+            if (user) {
+                const loginToken = authService.getLoginToken(user)
+                res.cookie('loginToken', loginToken)
+                res.send(user)
+            } else {
+                res.status(400).send('Cannot signup')
+            }
+        })
+        .catch(err => res.status(400).send('Username taken.'))
+})
+
+
+
 const PORT = 3030
 
 app.listen(PORT, () =>
     loggerService.info(`Server listening on port http://127.0.0.1:${PORT}/`)
 )
+
