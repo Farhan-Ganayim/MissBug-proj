@@ -43,17 +43,18 @@ function add(user) {
     return getByUsername(user.username)
         .then(existingUser => {
             if (existingUser) return Promise.reject('Username taken')
-
+        })
+        .catch(() => {
             user._id = utilService.makeId()
             users.push(user)
 
-            return _saveUsersToFile()
-                .then(() => {
-                    user = { ...user }
-                    delete user.password
-                    return user
-                })
+            return _saveUsersToFile().then(() => {
+                user = { ...user }
+                delete user.password
+                return user
+            })
         })
+
 }
 
 function _saveUsersToFile() {
