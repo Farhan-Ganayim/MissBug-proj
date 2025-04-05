@@ -63,14 +63,25 @@ export function BugIndex() {
     // function onSetFilterBy(filterBy) {
     //     setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
 
+    // function onSetFilterBy(filterBy) {
+    //     setFilterBy(prevFilter => {
+    //         const isSorting = filterBy.sortBy !== prevFilter.sortBy
+    //             || filterBy.sortDir !== prevFilter.sortDir
+    //         if (isSorting && (filterBy.pageIdx !== 0 && filterBy.pageIdx !== undefined)) return ({ ...prevFilter, ...filterBy, pageIdx: 0 })
+    //         else return ({ ...prevFilter, ...filterBy })
+    //     })
+    // }
+
     function onSetFilterBy(filterBy) {
         setFilterBy(prevFilter => {
-            const isSorting = filterBy.sortBy !== prevFilter.sortBy
-                || filterBy.sortDir !== prevFilter.sortDir
-            if (isSorting && filterBy.pageIdx !== undefined) return ({ ...prevFilter, ...filterBy, pageIdx: 0 })
-            else return ({ ...prevFilter, ...filterBy })
+            const updatedFilter = { ...prevFilter, ...filterBy }
+            if (prevFilter.pageIdx !== undefined) {
+                updatedFilter.pageIdx = 0
+            }
+    
+            return updatedFilter
         })
-    }
+    }    
 
     function togglePaging(ev) {
         const isChecked = ev.target.checked
