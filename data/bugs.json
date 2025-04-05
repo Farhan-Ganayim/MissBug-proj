@@ -1,10 +1,10 @@
 [
     {
-        "title": "Bug 1743676593189",
-        "description": "ddfdf",
-        "severity": 4,
-        "_id": "qvkLT",
-        "createdAt": 1743676601690
+        "title": "Bug 1743847102907",
+        "description": "dsfsdf",
+        "severity": 1,
+        "_id": "b843V",
+        "createdAt": 1743847109292
     },
     {
         "title": "Bug 1742981305284",
@@ -69,7 +69,7 @@
         "createdAt": 1582107359454,
         "owner": {
             "_id": "6iykr",
-            "fullname": "Kiki Ki",
+            "fullname": "the admin",
             "isAdmin": true
         }
     }

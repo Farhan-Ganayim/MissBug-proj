@@ -87,7 +87,7 @@ app.delete('/api/bug/:bugId', (req, res) => {
 })
 
 // User API
-app.get('api/user', (req, res) => {
+app.get('/api/user', (req, res) => {
     userService.query()
         .then(users => res.send(users))
         .catch(err => {
@@ -96,8 +96,8 @@ app.get('api/user', (req, res) => {
         })
 })
 
-app.get('api/user/:userId', (req, res) => {
-    const userId = req.params
+app.get('/api/user/:userId', (req, res) => {
+    const { userId } = req.params
     userService.getById(userId)
         .then(user => res.send(user))
         .catch(err => {
