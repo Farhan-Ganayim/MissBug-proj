@@ -63,58 +63,58 @@ export function BugIndex() {
     // function onSetFilterBy(filterBy) {
     //     setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
 
-        function onSetFilterBy(filterBy) {
-            setFilterBy(prevFilter => {
-                const isSorting = filterBy.sortBy !== prevFilter.sortBy
-                    || filterBy.sortDir !== prevFilter.sortDir
-                if (isSorting) return ({ ...prevFilter, ...filterBy, pageIdx: 0 })
-                else return ({ ...prevFilter, ...filterBy })
-            })
-        }
-
-        function togglePaging(ev) {
-            const isChecked = ev.target.checked
-            setFilterBy(prevFilter => {
-                if (isChecked) return { ...prevFilter, pageIdx: 0 }
-                else return { ...prevFilter, pageIdx: undefined }
-            })
-        }
-
-        function onChangePage(diff) {
-            if (filterBy.pageIdx === undefined) return
-            setFilterBy(prevFilter => {
-                let nextPageIdx = prevFilter.pageIdx + diff
-                if (nextPageIdx < 0) nextPageIdx = 0
-                return { ...prevFilter, pageIdx: nextPageIdx }
-            })
-
-        }
-
-
-        return <section className="bug-index main-content">
-
-            <BugFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
-            <header>
-                <h3>Bug List</h3>
-                <button onClick={onAddBug}>Add Bug</button>
-            </header>
-            <section className="bug-index-paging">
-                <label htmlFor="paging-toggle">Use pages</label>
-                <input
-                    type='checkbox'
-                    id='paging-toggle'
-                    name="paging"
-                    onChange={togglePaging}>
-
-                </input>
-                <button onClick={() => onChangePage(-1)}>←</button>
-                {filterBy.pageIdx + 1 || '--'}
-                <button onClick={() => onChangePage(1)}>→</button>
-
-            </section>
-            <BugList
-                bugs={bugs}
-                onRemoveBug={onRemoveBug}
-                onEditBug={onEditBug} />
-        </section>
+    function onSetFilterBy(filterBy) {
+        setFilterBy(prevFilter => {
+            const isSorting = filterBy.sortBy !== prevFilter.sortBy
+                || filterBy.sortDir !== prevFilter.sortDir
+            if (isSorting && filterBy.pageIdx !== undefined) return ({ ...prevFilter, ...filterBy, pageIdx: 0 })
+            else return ({ ...prevFilter, ...filterBy })
+        })
     }
+
+    function togglePaging(ev) {
+        const isChecked = ev.target.checked
+        setFilterBy(prevFilter => {
+            if (isChecked) return { ...prevFilter, pageIdx: 0 }
+            else return { ...prevFilter, pageIdx: undefined }
+        })
+    }
+
+    function onChangePage(diff) {
+        if (filterBy.pageIdx === undefined) return
+        setFilterBy(prevFilter => {
+            let nextPageIdx = prevFilter.pageIdx + diff
+            if (nextPageIdx < 0) nextPageIdx = 0
+            return { ...prevFilter, pageIdx: nextPageIdx }
+        })
+
+    }
+
+
+    return <section className="bug-index main-content">
+
+        <BugFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+        <header>
+            <h3>Bug List</h3>
+            <button onClick={onAddBug}>Add Bug</button>
+        </header>
+        <section className="bug-index-paging">
+            <label htmlFor="paging-toggle">Use pages</label>
+            <input
+                type='checkbox'
+                id='paging-toggle'
+                name="paging"
+                onChange={togglePaging}>
+
+            </input>
+            <button onClick={() => onChangePage(-1)}>←</button>
+            {filterBy.pageIdx + 1 || '--'}
+            <button onClick={() => onChangePage(1)}>→</button>
+
+        </section>
+        <BugList
+            bugs={bugs}
+            onRemoveBug={onRemoveBug}
+            onEditBug={onEditBug} />
+    </section>
+}
