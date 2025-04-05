@@ -54,7 +54,6 @@ function add(user) {
                 return user
             })
         })
-
 }
 
 function _saveUsersToFile() {

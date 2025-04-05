@@ -55,7 +55,7 @@ app.put('/api/bug/:bugId', (req, res) => {
 })
 
 app.get('/api/bug/:bugId', (req, res) => {
-    
+
     const { bugId } = req.params
     let visitedBugs = req.cookies.visitedBugs || []
 
@@ -86,6 +86,26 @@ app.delete('/api/bug/:bugId', (req, res) => {
         })
 })
 
+// User API
+app.get('api/user', (req, res) => {
+    userService.query()
+        .then(users => res.send(users))
+        .catch(err => {
+            loggerService.error('Cannot load users', err)
+            res.status(400).send('Cannot load users')
+        })
+})
+
+app.get('api/user/:userId', (req, res) => {
+    const userId = req.params
+    userService.getById(userId)
+        .then(user => res.send(user))
+        .catch(err => {
+            loggerService.error('Cannot load user', err)
+            res.status(400).send('Cannot load user')
+        })
+})
+
 // Auth API
 app.post('/api/auth/login', (req, res) => {
     const credentials = req.body
@@ -101,7 +121,7 @@ app.post('/api/auth/login', (req, res) => {
 
 app.post('/api/auth/signup', (req, res) => {
     const credentials = req.body
-    
+
     userService.add(credentials)
         .then(user => {
             if (user) {
@@ -115,7 +135,10 @@ app.post('/api/auth/signup', (req, res) => {
         .catch(err => res.status(400).send('Username taken.'))
 })
 
-
+app.post('/api/auth/logout', (req, res) => {
+    res.clearCookie('loginToken')
+    res.send('Logged out')
+})
 
 const PORT = 3030
 
