@@ -24,10 +24,17 @@ app.get('/api/bug', (req, res) => {
 
 //ADD
 app.post('/api/bug', (req, res) => {
+
+    const { loginToken } = req.cookies
+    const loggedinUser = authService.validateToken(loginToken)
+    if (!loggedinUser) return res.status(401).send('Cannot add bug')
+    delete loggedinUser.username
+
     const bugToSave = {
         title: req.body.title,
         description: req.body.description,
         severity: +req.body.severity,
+        owner: loggedinUser
     }
     bugService.save(bugToSave)
         .then(bug => res.send(bug))
