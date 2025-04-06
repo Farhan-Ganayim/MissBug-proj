@@ -1,7 +1,7 @@
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
 const BASE_URL = '/api/auth/'
 
-export const userService = {
+export const authService = {
     login,
     signup,
     logout,

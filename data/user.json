@@ -89,5 +89,11 @@
     "username": "sasa",
     "password": "aabbcc",
     "_id": "FS0T1"
+  },
+  {
+    "username": "farhan",
+    "password": "aabbcc",
+    "fullname": "farhan gaga",
+    "_id": "2Mzl1"
   }
 ]
