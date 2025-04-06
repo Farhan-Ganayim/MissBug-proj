@@ -1,7 +1,7 @@
 import express from 'express'
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
-import { authService } from './services/auth.servic.js'
+import { authService } from './services/auth.back.service.js'
 import { userService } from './services/user.service.js'
 import cookieParser from 'cookie-parser'
 
