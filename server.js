@@ -47,13 +47,18 @@ app.post('/api/bug', (req, res) => {
 //EDIT
 app.put('/api/bug/:bugId', (req, res) => {
     console.log("🚀 ~ app.put ~ req:", req.body)
+
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    if (!loggedinUser) return res.status(401).send(`Can't update bug`)
+
     const bugToSave = {
         _id: req.body._id,
         title: req.body.title,
         description: req.body.description,
         severity: +req.body.severity,
+        owner: req.body.owner
     }
-    bugService.save(bugToSave)
+    bugService.save(bugToSave, loggedinUser)
         .then(bug => res.send(bug))
         .catch(err => {
             loggerService.error('Cannot save bug', err)
@@ -82,10 +87,12 @@ app.get('/api/bug/:bugId', (req, res) => {
 })
 
 app.delete('/api/bug/:bugId', (req, res) => {
+    const loggedinUser = authService.validateToken(req.cookies.loginToken)
+    if (!loggedinUser) return res.status(401).send(`Can't remove bug`)
 
     const { bugId } = req.params
     console.log('Deleted: ', bugId)
-    bugService.remove(bugId)
+    bugService.remove(bugId, loggedinUser)
         .then(() => res.send('Bug removed'))
         .catch(err => {
             loggerService.error('Cannot remove bug', err)
